@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur Setup Sim Racing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .setup-card {
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .setup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            padding: 15px;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 15px;
+            background: #f8fafc;
+        }
+        
+        .input-group {
+            margin-bottom: 12px;
+        }
+        
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: border 0.3s;
+            font-family: inherit;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        input[type="number"] {
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+        
+        .images-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .image-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .image-input-wrapper small {
+            color: #718096;
+            font-size: 0.8em;
+        }
+        
+        .image-preview {
+            min-height: 150px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            overflow: hidden;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+        }
+        
+        .image-preview.empty::after {
+            content: "📷";
+            color: #cbd5e0;
+            font-size: 1.5em;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 12px 15px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .section-header.cockpit {
+            background: linear-gradient(135deg,#2d3748 0%, #1a202c 100%);
+        }
+        
+        .section-body {
+            padding: 20px;
+            background: white;
+        }
+        
+        .cockpit-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .cockpit-option {
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        
+        .cockpit-option h4 {
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .accessoire-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            background: white;
+            transition: box-shadow 0.2s;
+        }
+        
+        .accessoire-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .accessoire-card h4 {
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .comparison-section {
+            margin-top: 40px;
+            background: white;
+            border: 3px solid #2d3748;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+        
+        .comparison-header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            min-width: 1200px;
+        }
+        
+        .comparison-table th {
+            background: #edf2f7;
+            padding: 15px 10px;
+            font-weight: 600;
+            color: #2d3748;
+            border-bottom: 2px solid #cbd5e0;
+            text-align: center;
+            font-size: 0.95em;
+        }
+        
+        .comparison-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f7fafc;
+        }
+        
+        .label-col {
+            text-align: left;
+            font-weight: 600;
+            color: #2d3748;
+            background: #f8fafc;
+            position: sticky;
+            left: 0;
+            min-width: 200px;
+        }
+        
+        .total-row {
+            background: #4299e1 !important;
+            color: white;
+            font-weight: bold;
+            font-size: 1.15em;
+        }
+        
+        .total-row td {
+            padding: 18px 10px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 0.95em;
+            background: white;
+            cursor: pointer;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+        
+        .note {
+            background: #fff5e1;
+            border-left: 4px solid #ed8936;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            color: #744210;
+        }
+        
+        .price-display {
+            font-size: 1.1em;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .cockpit-images-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        /* Version mobile du tableau */
+        .comparison-mobile {
+            display: none;
+        }
+
+        .setup-comparison-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .setup-comparison-header {
+            padding: 15px;
+            font-weight: bold;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .setup-comparison-body {
+            padding: 15px;
+        }
+
+        .comparison-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-label {
+            font-weight: 600;
+            color: #2d3748;
+            flex: 1;
+        }
+
+        .comparison-value {
+            text-align: right;
+            color: #4a5568;
+            flex: 0 0 auto;
+            margin-left: 10px;
+        }
+
+        .comparison-total {
+            background: #4299e1;
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Media query pour mobile */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header p {
+                font-size: 0.9em;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .setup-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cockpit-options {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Cacher la version desktop sur mobile */
+            .comparison-section > div[style*="overflow-x"] {
+                display: none;
+            }
+            
+            /* Afficher la version mobile */
+            .comparison-mobile {
+                display: block;
+                padding: 15px;
+            }
+            
+            .comparison-header {
+                font-size: 1.4em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏎️ Calculateur Setup Sim Racing</h1>
+            <p>Configurez et comparez vos 5 setups avec images</p>
+        </div>
+        
+        <div class="content">
+
+            <!-- Grille des 5 Setups Basiques -->
+            <div class="setup-grid">
+                <div class="setup-card">
+                    <div class="card-header" style="background: linear-gradient(135deg, #667eea 0%, #5568d3 100%);">
+                        Setup 1
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Nom du Setup</label>
+                            <input type="text" placeholder="Ex: Setup Entrée de Gamme" data-setup="1" class="setup-name" value="">
+                        </div>
+                        <div class="input-group">
+                            <label>Images (URLs)</label>
+                            <div class="images-container">
+                                <div class="image-input-wrapper">
+                                    <small>Image 1</small>
+                                    <input type="text" placeholder="https://..." data-setup="1" data-img="1" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="1" data-img="1" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="1" data-img="1" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 2</small>
+                                    <input type="text" placeholder="https://..." data-setup="1" data-img="2" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="1" data-img="2" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="1" data-img="2" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 3</small>
+                                    <input type="text" placeholder="https://..." data-setup="1" data-img="3" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="1" data-img="3" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="1" data-img="3" class="setup-image-price" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Composants inclus</label>
+                            <textarea placeholder="Volant, pédalier, support..." data-setup="1" class="setup-desc"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>Prix Total (€)</label>
+                            <input type="number" placeholder="0.00" step="0.01" data-setup="1" class="setup-price" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setup-card">
+                    <div class="card-header" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                        Setup 2
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Nom du Setup</label>
+                            <input type="text" placeholder="Ex: Setup Intermédiaire" data-setup="2" class="setup-name" value="">
+                        </div>
+                        <div class="input-group">
+                            <label>Images (URLs)</label>
+                            <div class="images-container">
+                                <div class="image-input-wrapper">
+                                    <small>Image 1</small>
+                                    <input type="text" placeholder="https://..." data-setup="2" data-img="1" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="2" data-img="1" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="2" data-img="1" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 2</small>
+                                    <input type="text" placeholder="https://..." data-setup="2" data-img="2" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="2" data-img="2" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="2" data-img="2" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 3</small>
+                                    <input type="text" placeholder="https://..." data-setup="2" data-img="3" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="2" data-img="3" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="2" data-img="3" class="setup-image-price" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Composants inclus</label>
+                            <textarea placeholder="Volant, pédalier, support..." data-setup="2" class="setup-desc" style="height: 48px;"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>Prix Total (€)</label>
+                            <input type="number" placeholder="0.00" step="0.01" data-setup="2" class="setup-price" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setup-card">
+                    <div class="card-header" style="background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);">
+                        Setup 3
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Nom du Setup</label>
+                            <input type="text" placeholder="Ex: Setup Avancé" data-setup="3" class="setup-name" value="">
+                        </div>
+                        <div class="input-group">
+                            <label>Images (URLs)</label>
+                            <div class="images-container">
+                                <div class="image-input-wrapper">
+                                    <small>Image 1</small>
+                                    <input type="text" placeholder="https://..." data-setup="3" data-img="1" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="3" data-img="1" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="3" data-img="1" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 2</small>
+                                    <input type="text" placeholder="https://..." data-setup="3" data-img="2" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="3" data-img="2" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="3" data-img="2" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 3</small>
+                                    <input type="text" placeholder="https://..." data-setup="3" data-img="3" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="3" data-img="3" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="3" data-img="3" class="setup-image-price" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Composants inclus</label>
+                            <textarea placeholder="Volant, pédalier, support..." data-setup="3" class="setup-desc"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>Prix Total (€)</label>
+                            <input type="number" placeholder="0.00" step="0.01" data-setup="3" class="setup-price" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setup-card">
+                    <div class="card-header" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);">
+                        Setup 4
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Nom du Setup</label>
+                            <input type="text" placeholder="Ex: Setup Pro" data-setup="4" class="setup-name" value="">
+                        </div>
+                        <div class="input-group">
+                            <label>Images (URLs)</label>
+                            <div class="images-container">
+                                <div class="image-input-wrapper">
+                                    <small>Image 1</small>
+                                    <input type="text" placeholder="https://..." data-setup="4" data-img="1" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="4" data-img="1" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="4" data-img="1" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 2</small>
+                                    <input type="text" placeholder="https://..." data-setup="4" data-img="2" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="4" data-img="2" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="4" data-img="2" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 3</small>
+                                    <input type="text" placeholder="https://..." data-setup="4" data-img="3" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="4" data-img="3" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="4" data-img="3" class="setup-image-price" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Composants inclus</label>
+                            <textarea placeholder="Volant, pédalier, support..." data-setup="4" class="setup-desc"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>Prix Total (€)</label>
+                            <input type="number" placeholder="0.00" step="0.01" data-setup="4" class="setup-price" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setup-card">
+                    <div class="card-header" style="background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);">
+                        Setup 5
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Nom du Setup</label>
+                            <input type="text" placeholder="Ex: Setup Elite" data-setup="5" class="setup-name" value="">
+                        </div>
+                        <div class="input-group">
+                            <label>Images (URLs)</label>
+                            <div class="images-container">
+                                <div class="image-input-wrapper">
+                                    <small>Image 1</small>
+                                    <input type="text" placeholder="https://..." data-setup="5" data-img="1" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="5" data-img="1" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="5" data-img="1" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 2</small>
+                                    <input type="text" placeholder="https://..." data-setup="5" data-img="2" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="5" data-img="2" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="5" data-img="2" class="setup-image-price" value="">
+                                </div>
+                                <div class="image-input-wrapper">
+                                    <small>Image 3</small>
+                                    <input type="text" placeholder="https://..." data-setup="5" data-img="3" class="setup-image" value="">
+                                    <div class="image-preview empty" data-setup="5" data-img="3" data-type="setup"></div>
+                                    <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="5" data-img="3" class="setup-image-price" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Composants inclus</label>
+                            <textarea placeholder="Volant, pédalier, support..." data-setup="5" class="setup-desc"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>Prix Total (€)</label>
+                            <input type="number" placeholder="0.00" step="0.01" data-setup="5" class="setup-price" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Accessoires par Setup -->
+            <div class="section">
+                <div class="section-header">
+                    🎮 Accessoires par Setup
+                </div>
+                <div class="section-body">
+                    <div class="setup-grid">
+                        <div class="accessoire-card">
+                            <h4 style="background: linear-gradient(135deg, #667eea 0%, #5568d3 100%); color: white; padding: 10px; border-radius: 6px;">🎮 Accessoires Setup 1</h4>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="1" class="acc-desc"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images (URLs)</label>
+                                <div class="images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Image 1</small>
+                                        <input type="text" placeholder="https://..." data-setup="1" data-img="1" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="1" data-img="1" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="1" data-img="1" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 2</small>
+                                        <input type="text" placeholder="https://..." data-setup="1" data-img="2" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="1" data-img="2" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="1" data-img="2" class="acc-image-price" value="">
+
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 3</small>
+                                        <input type="text" placeholder="https://..." data-setup="1" data-img="3" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="1" data-img="3" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="1" data-img="3" class="acc-image-price" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Total (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" data-setup="1" class="acc-price" value="0">
+                            </div>
+                        </div>
+
+                        <div class="accessoire-card">
+                            <h4 style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; padding: 10px; border-radius: 6px;">🎮 Accessoires Setup 2</h4>
+
+                            <div class="input-group">
+                                <label>Description</label>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="2" class="acc-desc"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images (URLs)</label>
+                                <div class="images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Image 1</small>
+                                        <input type="text" placeholder="https://..." data-setup="2" data-img="1" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="2" data-img="1" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="2" data-img="1" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 2</small>
+                                        <input type="text" placeholder="https://..." data-setup="2" data-img="2" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="2" data-img="2" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="2" data-img="2" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 3</small>
+                                        <input type="text" placeholder="https://..." data-setup="2" data-img="3" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="2" data-img="3" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="2" data-img="3" class="acc-image-price" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Total (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" data-setup="2" class="acc-price" value="0">
+                            </div>
+                        </div>
+
+                        <div class="accessoire-card">
+                            <h4 style="background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%); color: white; padding: 10px; border-radius: 6px;">🎮 Accessoires Setup 3</h4>
+
+                            <div class="input-group">
+                                <label>Description</label>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="3" class="acc-desc"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images (URLs)</label>
+                                <div class="images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Image 1</small>
+                                        <input type="text" placeholder="https://..." data-setup="3" data-img="1" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="3" data-img="1" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="3" data-img="1" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 2</small>
+                                        <input type="text" placeholder="https://..." data-setup="3" data-img="2" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="3" data-img="2" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="3" data-img="2" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 3</small>
+                                        <input type="text" placeholder="https://..." data-setup="3" data-img="3" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="3" data-img="3" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="3" data-img="3" class="acc-image-price" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Total (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" data-setup="3" class="acc-price" value="0">
+                            </div>
+                        </div>
+
+                        <div class="accessoire-card">
+                            <h4 style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%); color: white; padding: 10px; border-radius: 6px;">🎮 Accessoires Setup 4</h4>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="4" class="acc-desc"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images (URLs)</label>
+                                <div class="images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Image 1</small>
+                                        <input type="text" placeholder="https://..." data-setup="4" data-img="1" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="4" data-img="1" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="4" data-img="1" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 2</small>
+                                        <input type="text" placeholder="https://..." data-setup="4" data-img="2" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="4" data-img="2" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="4" data-img="2" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 3</small>
+                                        <input type="text" placeholder="https://..." data-setup="4" data-img="3" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="4" data-img="3" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="4" data-img="3" class="acc-image-price" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Total (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" data-setup="4" class="acc-price" value="0">
+                            </div>
+                        </div>
+
+                        <div class="accessoire-card">          
+                            <h4 style="background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%); color: white; padding: 10px; border-radius: 6px;">🎮 Accessoires Setup 5</h4>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="5" class="acc-desc"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images (URLs)</label>
+                                <div class="images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Image 1</small>
+                                        <input type="text" placeholder="https://..." data-setup="5" data-img="1" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="5" data-img="1" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="5" data-img="1" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 2</small>
+                                        <input type="text" placeholder="https://..." data-setup="5" data-img="2" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="5" data-img="2" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 2 (€)" step="0.01" data-setup="5" data-img="2" class="acc-image-price" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Image 3</small>
+                                        <input type="text" placeholder="https://..." data-setup="5" data-img="3" class="acc-image" value="">
+                                        <div class="image-preview empty" data-setup="5" data-img="3" data-type="acc"></div>
+                                        <input type="number" placeholder="Prix image 3 (€)" step="0.01" data-setup="5" data-img="3" class="acc-image-price" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Total (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" data-setup="5" class="acc-price" value="0">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Cockpits -->
+            <div class="section">
+                <div class="section-header">
+                    🪑 Options Cockpit
+                </div>
+                <div class="section-body">
+                    <div class="cockpit-options">
+                        <div class="cockpit-option">
+                            <h4>💰 Cockpit 1</h4>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <input type="text" placeholder="Ex: Cockpit + Siège entrée de gamme" id="cockpit-basic-desc" value="">
+                            </div>
+                            <div class="input-group">
+                                <label>Image Cockpit (URL)</label>
+                                <input type="text" placeholder="https://..." id="cockpit-basic-image" value="">
+                                <div class="image-preview empty" id="cockpit-basic-preview" data-type="cockpit"></div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Cockpit (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" id="cockpit-basic-price" value="">
+                            </div>
+                            <div class="input-group">
+                                <label>Accessoires Cockpit (optionnel)</label>
+                                <textarea placeholder="Liste des accessoires inclus..." id="cockpit-basic-acc-desc"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images Accessoires (URLs)</label>
+                                <div class="cockpit-images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 1</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-basic-acc-img-1" class="cockpit-acc-image" data-cockpit="basic" value="">
+                                        <div class="image-preview empty" id="cockpit-basic-acc-preview-1" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-basic-acc-price-1" class="cockpit-acc-price" data-cockpit="basic" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 2</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-basic-acc-img-2" class="cockpit-acc-image" data-cockpit="basic" value="">
+                                        <div class="image-preview empty" id="cockpit-basic-acc-preview-2" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-basic-acc-price-2" class="cockpit-acc-price" data-cockpit="basic" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 3</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-basic-acc-img-3" class="cockpit-acc-image" data-cockpit="basic" value="">
+                                        <div class="image-preview empty" id="cockpit-basic-acc-preview-3" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-basic-acc-price-3" class="cockpit-acc-price" data-cockpit="basic" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cockpit-option">
+                            <h4>💎 Cockpit 2</h4>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <input type="text" placeholder="Ex: Cockpit + Siège haut de gamme" id="cockpit-premium-desc" value="">
+                            </div>
+                            <div class="input-group">
+                                <label>Image Cockpit (URL)</label>
+                                <input type="text" placeholder="https://..." id="cockpit-premium-image" value="">
+                                <div class="image-preview empty" id="cockpit-premium-preview" data-type="cockpit"></div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Cockpit (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" id="cockpit-premium-price" value="">
+                            </div>
+                            <div class="input-group">
+                                <label>Accessoires Cockpit (optionnel)</label>
+                                <textarea placeholder="Liste des accessoires inclus..." id="cockpit-premium-acc-desc"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images Accessoires (URLs)</label>
+                                <div class="cockpit-images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 1</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-premium-acc-img-1" class="cockpit-acc-image" data-cockpit="premium" value="">
+                                        <div class="image-preview empty" id="cockpit-premium-acc-preview-1" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-premium-acc-price-1" class="cockpit-acc-price" data-cockpit="premium" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 2</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-premium-acc-img-2" class="cockpit-acc-image" data-cockpit="premium" value="">
+                                        <div class="image-preview empty" id="cockpit-premium-acc-preview-2" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-premium-acc-price-2" class="cockpit-acc-price" data-cockpit="premium" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 3</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-premium-acc-img-3" class="cockpit-acc-image" data-cockpit="premium" value="">
+                                        <div class="image-preview empty" id="cockpit-premium-acc-preview-3" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-premium-acc-price-3" class="cockpit-acc-price" data-cockpit="premium" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cockpit-option">
+                            <h4>🚀 Cockpit 3</h4>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <input type="text" placeholder="Ex: Cockpit TR40S" id="cockpit-tr40s-desc" value="">
+                            </div>
+                            <div class="input-group">
+                                <label>Image Cockpit (URL)</label>
+                                <input type="text" placeholder="https://..." id="cockpit-tr40s-image" value="">
+                                <div class="image-preview empty" id="cockpit-tr40s-preview" data-type="cockpit"></div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Cockpit (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" id="cockpit-tr40s-price" value="">
+                            </div>
+                            <div class="input-group">
+                                <label>Accessoires Cockpit (optionnel)</label>
+                                <textarea placeholder="Liste des accessoires inclus..." id="cockpit-tr40s-acc-desc"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images Accessoires (URLs)</label>
+                                <div class="cockpit-images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 1</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-tr40s-acc-img-1" class="cockpit-acc-image" data-cockpit="tr40s" value="">
+                                        <div class="image-preview empty" id="cockpit-tr40s-acc-preview-1" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-tr40s-acc-price-1" class="cockpit-acc-price" data-cockpit="tr40s" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 2</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-tr40s-acc-img-2" class="cockpit-acc-image" data-cockpit="tr40s" value="">
+                                        <div class="image-preview empty" id="cockpit-tr40s-acc-preview-2" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-tr40s-acc-price-2" class="cockpit-acc-price" data-cockpit="tr40s" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 3</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-tr40s-acc-img-3" class="cockpit-acc-image" data-cockpit="tr40s" value="">
+                                        <div class="image-preview empty" id="cockpit-tr40s-acc-preview-3" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-tr40s-acc-price-3" class="cockpit-acc-price" data-cockpit="tr40s" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cockpit-option">
+                            <h4>⚡ Cockpit 4</h4>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <input type="text" placeholder="Ex: Cockpit GT Lite Pro" id="cockpit-gtlitepro-desc" value="">
+                            </div>
+                            <div class="input-group">
+                                <label>Image Cockpit (URL)</label>
+                                <input type="text" placeholder="https://..." id="cockpit-gtlitepro-image" value="">
+                                <div class="image-preview empty" id="cockpit-gtlitepro-preview" data-type="cockpit"></div>
+                            </div>
+                            <div class="input-group">
+                                <label>Prix Cockpit (€)</label>
+                                <input type="number" placeholder="0.00" step="0.01" id="cockpit-gtlitepro-price" value="">
+                            </div>
+                            <div class="input-group">
+                                <label>Accessoires Cockpit (optionnel)</label>
+                                <textarea placeholder="Liste des accessoires inclus..." id="cockpit-gtlitepro-acc-desc" style="height: 87px;"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Images Accessoires (URLs)</label>
+                                <div class="cockpit-images-container">
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 1</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-gtlitepro-acc-img-1" class="cockpit-acc-image" data-cockpit="gtlitepro" value="">
+                                        <div class="image-preview empty" id="cockpit-gtlitepro-acc-preview-1" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-gtlitepro-acc-price-1" class="cockpit-acc-price" data-cockpit="gtlitepro" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 2</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-gtlitepro-acc-img-2" class="cockpit-acc-image" data-cockpit="gtlitepro" value="">
+                                        <div class="image-preview empty" id="cockpit-gtlitepro-acc-preview-2" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-gtlitepro-acc-price-2" class="cockpit-acc-price" data-cockpit="gtlitepro" value="">
+                                    </div>
+                                    <div class="image-input-wrapper">
+                                        <small>Accessoire 3</small>
+                                        <input type="text" placeholder="https://..." id="cockpit-gtlitepro-acc-img-3" class="cockpit-acc-image" data-cockpit="gtlitepro" value="">
+                                        <div class="image-preview empty" id="cockpit-gtlitepro-acc-preview-3" data-type="cockpit-acc"></div>
+                                        <input type="number" placeholder="Prix (€)" step="0.01" id="cockpit-gtlitepro-acc-price-3" class="cockpit-acc-price" data-cockpit="gtlitepro" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tableau de Comparaison -->
+            <div class="comparison-section">
+                <div class="comparison-header">
+                    📊 Tableau de Comparaison
+                </div>
+                <div class="comparison-table-wrapper" style="overflow-x: auto;">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th class="label-col">Configuration</th>
+                                <th>Setup 1<br><small id="header-name-1">-</small></th>
+                                <th>Setup 2<br><small id="header-name-2">-</small></th>
+                                <th>Setup 3<br><small id="header-name-3">-</small></th>
+                                <th>Setup 4<br><small id="header-name-4">-</small></th>
+                                <th>Setup 5<br><small id="header-name-5">-</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="label-col">Prix Setup Basique</td>
+                                <td class="price-display" id="price-base-1">0.00 €</td>
+                                <td class="price-display" id="price-base-2">0.00 €</td>
+                                <td class="price-display" id="price-base-3">0.00 €</td>
+                                <td class="price-display" id="price-base-4">0.00 €</td>
+                                <td class="price-display" id="price-base-5">0.00 €</td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Ajouter Cockpit</td>
+                                <td>
+                                    <select data-setup="1" class="cockpit-select">
+                                        <option value="none" selected="selected">Aucun</option>
+                                        <option value="basic">Cockpit 1 </option>
+                                        <option value="premium">Cockpit 2 </option>
+                                        <option value="tr40s">Cockpit 3 </option>
+                                        <option value="gtlitepro">Cockpit 4 </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select data-setup="2" class="cockpit-select">
+                                        <option value="none" selected="selected">Aucun</option>
+                                        <option value="basic">Cockpit 1 </option>
+                                        <option value="premium">Cockpit 2 </option>
+                                        <option value="tr40s">Cockpit 3 </option>
+                                        <option value="gtlitepro">Cockpit 4 </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select data-setup="3" class="cockpit-select">
+                                        <option value="none" selected="selected">Aucun</option>
+                                        <option value="basic">Cockpit 1 </option>
+                                        <option value="premium">Cockpit 2 </option>
+                                        <option value="tr40s">Cockpit 3 </option>
+                                        <option value="gtlitepro">Cockpit 4 </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select data-setup="4" class="cockpit-select">
+                                        <option value="none" selected="selected">Aucun</option>
+                                        <option value="basic">Cockpit 1 </option>
+                                        <option value="premium">Cockpit 2 </option>
+                                        <option value="tr40s">Cockpit 3 </option>
+                                        <option value="gtlitepro">Cockpit 4 </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select data-setup="5" class="cockpit-select">
+                                        <option value="none" selected="selected">Aucun</option>
+                                        <option value="basic">Cockpit 1 </option>
+                                        <option value="premium">Cockpit 2 </option>
+                                        <option value="tr40s">Cockpit 3 </option>
+                                        <option value="gtlitepro">Cockpit 4 </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-col">Ajouter Accessoires</td>
+                                <td><input type="checkbox" data-setup="1" class="accessoires-check" style="width: 20px; height: 20px; cursor: pointer;" checked="checked"></td>
+                                <td><input type="checkbox" data-setup="2" class="accessoires-check" style="width: 20px; height: 20px; cursor: pointer;" checked="checked"></td>
+                                <td><input type="checkbox" data-setup="3" class="accessoires-check" style="width: 20px; height: 20px; cursor: pointer;" checked="checked"></td>
+                                <td><input type="checkbox" data-setup="4" class="accessoires-check" style="width: 20px; height: 20px; cursor: pointer;"></td>
+                                <td><input type="checkbox" data-setup="5" class="accessoires-check" style="width: 20px; height: 20px; cursor: pointer;"></td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="label-col">TOTAL</td>
+                                <td id="total-1">0.00 €</td>
+                                <td id="total-2">0.00 €</td>
+                                <td id="total-3">0.00 €</td>
+                                <td id="total-4">0.00 €</td>
+                                <td id="total-5">0.00 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- VERSION MOBILE -->
+                <div class="comparison-mobile">
+                    <div class="setup-comparison-card">
+                        <div class="setup-comparison-header" style="background: linear-gradient(135deg, #667eea 0%, #5568d3 100%);">
+                            Setup 1 : <span id="mobile-name-1">-</span>
+                        </div>
+                        <div class="setup-comparison-body">
+                            <div class="comparison-row">
+                                <span class="comparison-label">Prix Setup Basique</span>
+                                <span class="comparison-value price-display" id="mobile-price-base-1">0.00 €</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Cockpit</span>
+                                <select data-setup="1" class="cockpit-select-mobile">
+                                    <option value="none" selected="selected">Aucun</option>
+                                    <option value="basic">Cockpit 1 </option>
+                                    <option value="premium">Cockpit 2 </option>
+                                    <option value="tr40s">Cockpit 3 </option>
+                                    <option value="gtlitepro">Cockpit 4 </option>
+                                </select>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Accessoires</span>
+                                <input type="checkbox" data-setup="1" class="accessoires-check-mobile" style="width: 24px; height: 24px; cursor: pointer;" checked="checked">
+                            </div>
+                        </div>
+                        <div class="comparison-total">
+                            <span>TOTAL</span>
+                            <span id="mobile-total-1">0.00 €</span>
+                        </div>
+                    </div>
+
+                    <div class="setup-comparison-card">
+                        <div class="setup-comparison-header" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                            Setup 2 : <span id="mobile-name-2">-</span>
+                        </div>
+                        <div class="setup-comparison-body">
+                            <div class="comparison-row">
+                                <span class="comparison-label">Prix Setup Basique</span>
+                                <span class="comparison-value price-display" id="mobile-price-base-2">0.00 €</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Cockpit</span>
+                                <select data-setup="2" class="cockpit-select-mobile">
+                                    <option value="none" selected="selected">Aucun</option>
+                                    <option value="basic">Cockpit 1 </option>
+                                    <option value="premium">Cockpit 2 </option>
+                                    <option value="tr40s">Cockpit 3 </option>
+                                    <option value="gtlitepro">Cockpit 4 </option>
+                                </select>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Accessoires</span>
+                                <input type="checkbox" data-setup="2" class="accessoires-check-mobile" style="width: 24px; height: 24px; cursor: pointer;" checked="checked">
+                            </div>
+                        </div>
+                        <div class="comparison-total">
+                            <span>TOTAL</span>
+                            <span id="mobile-total-2">0.00 €</span>
+                        </div>
+                    </div>
+
+                    <div class="setup-comparison-card">
+                        <div class="setup-comparison-header" style="background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);">
+                            Setup 3 : <span id="mobile-name-3">-</span>
+                        </div>
+                        <div class="setup-comparison-body">
+                            <div class="comparison-row">
+                                <span class="comparison-label">Prix Setup Basique</span>
+                                <span class="comparison-value price-display" id="mobile-price-base-3">0.00 €</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Cockpit</span>
+                                <select data-setup="3" class="cockpit-select-mobile">
+                                    <option value="none" selected="selected">Aucun</option>
+                                    <option value="basic">Cockpit 1 </option>
+                                    <option value="premium">Cockpit 2 </option>
+                                    <option value="tr40s">Cockpit 3 </option>
+                                    <option value="gtlitepro">Cockpit 4 </option>
+                                </select>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Accessoires</span>
+                                <input type="checkbox" data-setup="3" class="accessoires-check-mobile" style="width: 24px; height: 24px; cursor: pointer;">
+                            </div>
+                        </div>
+                        <div class="comparison-total">
+                            <span>TOTAL</span>
+                            <span id="mobile-total-3">0.00 €</span>
+                        </div>
+                    </div>
+
+                    <div class="setup-comparison-card">
+                        <div class="setup-comparison-header" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);">
+                            Setup 4 : <span id="mobile-name-4">-</span>
+                        </div>
+                        <div class="setup-comparison-body">
+                            <div class="comparison-row">
+                                <span class="comparison-label">Prix Setup Basique</span>
+                                <span class="comparison-value price-display" id="mobile-price-base-4">0.00 €</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Cockpit</span>
+                                <select data-setup="4" class="cockpit-select-mobile">
+                                    <option value="none" selected="selected">Aucun</option>
+                                    <option value="basic">Cockpit 1 </option>
+                                    <option value="premium">Cockpit 2 </option>
+                                    <option value="tr40s">Cockpit 3 </option>
+                                    <option value="gtlitepro">Cockpit 4 </option>
+                                </select>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Accessoires</span>
+                                <input type="checkbox" data-setup="4" class="accessoires-check-mobile" style="width: 24px; height: 24px; cursor: pointer;">
+                            </div>
+                        </div>
+                        <div class="comparison-total">
+                            <span>TOTAL</span>
+                            <span id="mobile-total-4">0.00 €</span>
+                        </div>
+                    </div>
+
+                    <div class="setup-comparison-card">
+                        <div class="setup-comparison-header" style="background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);">
+                            Setup 5 : <span id="mobile-name-5">-</span>
+                        </div>
+                        <div class="setup-comparison-body">
+                            <div class="comparison-row">
+                                <span class="comparison-label">Prix Setup Basique</span>
+                                <span class="comparison-value price-display" id="mobile-price-base-5">0.00 €</span>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Cockpit</span>
+                                <select data-setup="5" class="cockpit-select-mobile">
+                                    <option value="none" selected="selected">Aucun</option>
+                                    <option value="basic">Cockpit 1 </option>
+                                    <option value="premium">Cockpit 2 </option>
+                                    <option value="tr40s">Cockpit 3 </option>
+                                    <option value="gtlitepro">Cockpit 4 </option>
+                            </div>
+                            <div class="comparison-row">
+                                <span class="comparison-label">Accessoires</span>
+                                <input type="checkbox" data-setup="5" class="accessoires-check-mobile" style="width: 24px; height: 24px; cursor: pointer;">
+                            </div>
+                        </div>
+                        <div class="comparison-total">
+                            <span>TOTAL</span>
+                            <span id="mobile-total-5">0.00 €</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toPrice(v) {
+            v = Number(v) || 0;
+            return v.toFixed(2) + ' €';
+        }
+
+        function updateHeaderNames() {
+            for (let i = 1; i <= 5; i++) {
+                const nameInput = document.querySelector('.setup-name[data-setup="' + i + '"]');
+                const header = document.getElementById('header-name-' + i);
+                const mobileHeader = document.getElementById('mobile-name-' + i);
+                if (nameInput && header) {
+                    header.innerText = nameInput.value.trim() || '-';
+                }
+                if (nameInput && mobileHeader) {
+                    mobileHeader.innerText = nameInput.value.trim() || '-';
+                }
+            }
+        }
+
+        function setPreview(previewEl, url) {
+            if (!previewEl) return;
+            url = (url || '').trim();
+            if (!url) {
+                previewEl.classList.add('empty');
+                previewEl.innerHTML = '';
+                return;
+            }
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = 'preview';
+            img.onload = function() {
+                previewEl.classList.remove('empty');
+                previewEl.innerHTML = '';
+                previewEl.appendChild(img);
+            };
+            img.onerror = function() {
+                previewEl.classList.add('empty');
+                previewEl.innerHTML = '<div style="padding:10px;font-size:0.9em;color:#cbd5e0">Image non valide</div>';
+            };
+        }
+
+        function wireImageInputs() {
+            document.querySelectorAll('input.setup-image').forEach(inp => {
+                inp.addEventListener('input', function() {
+                    const s = this.dataset.setup;
+                    const img = this.dataset.img;
+                    let sel = '.image-preview[data-setup="' + s + '"][data-img="' + img + '"]';
+                    let p = document.querySelector(sel);
+                    if (!p) {
+                        p = document.querySelector('.image-preview[data-setup="' + s + '"]');
+                    }
+                    setPreview(p, this.value);
+                    updateTotals();
+                });
+                inp.dispatchEvent(new Event('input'));
+            });
+
+            document.querySelectorAll('input.acc-image').forEach(inp => {
+                inp.addEventListener('input', function() {
+                    const s = this.dataset.setup;
+                    const img = this.dataset.img;
+                    let sel = '.image-preview[data-setup="' + s + '"][data-img="' + img + '"][data-type="acc"]';
+                    let p = document.querySelector(sel);
+                    if (!p) p = document.querySelector('.image-preview[data-setup="' + s + '"][data-type="acc"]');
+                    setPreview(p, this.value);
+                    updateTotals();
+                });
+                inp.dispatchEvent(new Event('input'));
+            });
+
+            const cb = document.getElementById('cockpit-basic-image');
+            const cp = document.getElementById('cockpit-premium-image');
+            const pcb = document.getElementById('cockpit-basic-preview');
+            const pcp = document.getElementById('cockpit-premium-preview');
+            if (cb) { cb.addEventListener('input', () => setPreview(pcb, cb.value)); cb.dispatchEvent(new Event('input')); }
+            if (cp) { cp.addEventListener('input', () => setPreview(pcp, cp.value)); cp.dispatchEvent(new Event('input')); }
+            
+            const ctr = document.getElementById('cockpit-tr40s-image');
+            const cgt = document.getElementById('cockpit-gtlitepro-image');
+            const ptr = document.getElementById('cockpit-tr40s-preview');
+            const pgt = document.getElementById('cockpit-gtlitepro-preview');
+            if (ctr) { ctr.addEventListener('input', () => setPreview(ptr, ctr.value)); ctr.dispatchEvent(new Event('input')); }
+            if (cgt) { cgt.addEventListener('input', () => setPreview(pgt, cgt.value)); cgt.dispatchEvent(new Event('input')); }
+                        
+            document.querySelectorAll('.cockpit-acc-image').forEach(inp => {
+                inp.addEventListener('input', function() {
+                    const cockpitType = this.dataset.cockpit;
+                    const imgNum = this.id.split('-').pop();
+                    const previewId = 'cockpit-' + cockpitType + '-acc-preview-' + imgNum;
+                    const preview = document.getElementById(previewId);
+                    setPreview(preview, this.value);
+                    updateTotals();
+                });
+                inp.dispatchEvent(new Event('input'));
+            });
+        }
+
+        function syncSelects(setup) {
+            const desktopSelect = document.querySelector('.cockpit-select[data-setup="' + setup + '"]');
+            const mobileSelect = document.querySelector('.cockpit-select-mobile[data-setup="' + setup + '"]');
+            
+            if (desktopSelect && mobileSelect) {
+                desktopSelect.value = mobileSelect.value;
+                mobileSelect.value = desktopSelect.value;
+            }
+        }
+
+        function syncCheckboxes(setup) {
+            const desktopCheck = document.querySelector('.accessoires-check[data-setup="' + setup + '"]');
+            const mobileCheck = document.querySelector('.accessoires-check-mobile[data-setup="' + setup + '"]');
+            
+            if (desktopCheck && mobileCheck) {
+                desktopCheck.checked = mobileCheck.checked;
+                mobileCheck.checked = desktopCheck.checked;
+            }
+        }
+
+        function setupBidirectionalSync() {
+            // Synchronisation des selects cockpit
+            document.querySelectorAll('.cockpit-select').forEach(desktopSelect => {
+                desktopSelect.addEventListener('change', function() {
+                    const setup = this.dataset.setup;
+                    const mobileSelect = document.querySelector('.cockpit-select-mobile[data-setup="' + setup + '"]');
+                    if (mobileSelect) {
+                        mobileSelect.value = this.value;
+                    }
+                    updateTotals();
+                });
+            });
+
+            document.querySelectorAll('.cockpit-select-mobile').forEach(mobileSelect => {
+                mobileSelect.addEventListener('change', function() {
+                    const setup = this.dataset.setup;
+                    const desktopSelect = document.querySelector('.cockpit-select[data-setup="' + setup + '"]');
+                    if (desktopSelect) {
+                        desktopSelect.value = this.value;
+                    }
+                    updateTotals();
+                });
+            });
+
+            // Synchronisation des checkboxes accessoires
+            document.querySelectorAll('.accessoires-check').forEach(desktopCheck => {
+                desktopCheck.addEventListener('change', function() {
+                    const setup = this.dataset.setup;
+                    const mobileCheck = document.querySelector('.accessoires-check-mobile[data-setup="' + setup + '"]');
+                    if (mobileCheck) {
+                        mobileCheck.checked = this.checked;
+                    }
+                    updateTotals();
+                });
+            });
+
+            document.querySelectorAll('.accessoires-check-mobile').forEach(mobileCheck => {
+                mobileCheck.addEventListener('change', function() {
+                    const setup = this.dataset.setup;
+                    const desktopCheck = document.querySelector('.accessoires-check[data-setup="' + setup + '"]');
+                    if (desktopCheck) {
+                        desktopCheck.checked = this.checked;
+                    }
+                    updateTotals();
+                });
+            });
+        }
+
+        function updateTotals() {
+            const basicPrice = Number(document.getElementById('cockpit-basic-price')?.value) || 0;
+            const premiumPrice = Number(document.getElementById('cockpit-premium-price')?.value) || 0;
+            const tr40sPrice = Number(document.getElementById('cockpit-tr40s-price')?.value) || 0;
+            const gtliteproPrice = Number(document.getElementById('cockpit-gtlitepro-price')?.value) || 0;
+
+            let basicAccTotal = 0;
+            for (let i = 1; i <= 3; i++) {
+                basicAccTotal += Number(document.getElementById('cockpit-basic-acc-price-' + i)?.value) || 0;
+            }
+
+            let premiumAccTotal = 0;
+            for (let i = 1; i <= 3; i++) {
+                premiumAccTotal += Number(document.getElementById('cockpit-premium-acc-price-' + i)?.value) || 0;
+            }
+
+            let tr40sAccTotal = 0;
+            for (let i = 1; i <= 3; i++) {
+                tr40sAccTotal += Number(document.getElementById('cockpit-tr40s-acc-price-' + i)?.value) || 0;
+            }
+
+            let gtliteproAccTotal = 0;
+            for (let i = 1; i <= 3; i++) {
+                gtliteproAccTotal += Number(document.getElementById('cockpit-gtlitepro-acc-price-' + i)?.value) || 0;
+            }
+
+            for (let i = 1; i <= 5; i++) {
+                let imgSum = 0;
+                document.querySelectorAll('.setup-image-price[data-setup="'+i+'"]').forEach(inp=>{
+                    imgSum += Number(inp.value) || 0;
+                });
+                const baseInput = document.querySelector('.setup-price[data-setup="' + i + '"]');
+                if (baseInput) baseInput.value = imgSum;
+
+                const base = imgSum;
+                const priceBaseEl = document.getElementById('price-base-' + i);
+                if (priceBaseEl) priceBaseEl.innerText = toPrice(base);
+                
+                const mobilePriceBaseEl = document.getElementById('mobile-price-base-' + i);
+                if (mobilePriceBaseEl) mobilePriceBaseEl.innerText = toPrice(base);
+
+                let accImgSum = 0;
+                document.querySelectorAll('.acc-image-price[data-setup="'+i+'"]').forEach(inp=>{
+                    accImgSum += Number(inp.value) || 0;
+                });
+                const accInput = document.querySelector('.acc-price[data-setup="' + i + '"]');
+                if (accInput) accInput.value = accImgSum;
+
+                const accCheck = document.querySelector('.accessoires-check[data-setup="' + i + '"]');
+                const accPrice = (accCheck && accCheck.checked) ? accImgSum : 0;
+
+                const cockpitSel = document.querySelector('.cockpit-select[data-setup="' + i + '"]');
+                let cockpitAdd = 0;
+                if (cockpitSel) {
+                    if (cockpitSel.value === 'basic') {
+                        cockpitAdd = basicPrice + basicAccTotal;
+                    } else if (cockpitSel.value === 'premium') {
+                        cockpitAdd = premiumPrice + premiumAccTotal;
+                    } else if (cockpitSel.value === 'tr40s') {
+                        cockpitAdd = tr40sPrice + tr40sAccTotal;
+                    } else if (cockpitSel.value === 'gtlitepro') {
+                        cockpitAdd = gtliteproPrice + gtliteproAccTotal;
+                    }
+                }
+
+                const total = base + accPrice + cockpitAdd;
+                const totalEl = document.getElementById('total-' + i);
+                if (totalEl) totalEl.innerText = toPrice(total);
+                const mobileTotalEl = document.getElementById('mobile-total-' + i);
+                if (mobileTotalEl) mobileTotalEl.innerText = toPrice(total);
+            }
+        }
+
+        function wireNumericInputs() {
+            document.querySelectorAll('.setup-price, .acc-price, #cockpit-basic-price, #cockpit-premium-price').forEach(inp => {
+                inp.addEventListener('input', updateTotals);
+            });
+            document.querySelectorAll('.cockpit-select').forEach(sel => {
+                sel.addEventListener('change', updateTotals);
+            });
+            document.querySelectorAll('.accessoires-check').forEach(cb => {
+                cb.addEventListener('change', updateTotals);
+            });
+            document.querySelectorAll('.setup-image-price, .acc-image-price, .cockpit-acc-price').forEach(inp => {
+                inp.addEventListener('input', updateTotals);
+            });
+            document.querySelectorAll('#cockpit-tr40s-price, #cockpit-gtlitepro-price').forEach(inp => {
+                inp.addEventListener('input', updateTotals);
+            });
+        }
+
+        function wireNameInputs() {
+            document.querySelectorAll('.setup-name').forEach(inp => {
+                inp.addEventListener('input', updateHeaderNames);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            wireImageInputs();
+            wireNumericInputs();
+            wireNameInputs();
+            setupBidirectionalSync();
+            updateHeaderNames();
+            updateTotals();
+        });
+    </script>
+    
+    <div style="text-align:center; margin-top:30px; padding-bottom:30px;">
+        <button id="export-btn" style="
+            background:#4299e1;
+            color:white;
+            font-size:1.1em;
+            padding:12px 20px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;">
+            💾 Exporter mes réglages
+        </button>
+    </div>
+
+    <script>
+        document.getElementById('export-btn').addEventListener('click', function() {
+            const doc = document.cloneNode(true);
+
+            doc.querySelectorAll('input, textarea, select').forEach(el => {
+                if (el.tagName === 'TEXTAREA') {
+                    el.innerHTML = el.value;
+                } else if (el.tagName === 'SELECT') {
+                    el.querySelectorAll('option').forEach(opt => {
+                        opt.removeAttribute('selected');
+                        if (opt.value === el.value) opt.setAttribute('selected', 'selected');
+                    });
+                } else if (el.type === 'checkbox') {
+                    if (el.checked) {
+                        el.setAttribute('checked', 'checked');
+                    } else {
+                        el.removeAttribute('checked');
+                    }
+                } else {
+                    el.setAttribute('value', el.value);
+                }
+            });
+
+            const html = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+
+            const blob = new Blob([html], {type: 'text/html'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'setup_simRacing_V.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    </script>
+
+
+</body></html>
