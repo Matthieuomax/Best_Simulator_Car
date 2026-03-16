@@ -446,7 +446,7 @@
     <div class="container">
         <div class="header">
             <h1>🏎️ Calculateur Setup Sim Racing</h1>
-            <p>Configurez et comparez vos 5 setups avec images</p>
+            <p>Configurez et comparez vos setups avec images</p>
             <button class="reset-btn" onclick="window.location.href='Sim_BASE.html'">
                 🔄 Recommencer sur une base vierge
             </button>
@@ -458,12 +458,12 @@
             <div class="setup-grid">
                 <div class="setup-card">
                     <div class="card-header" style="background: linear-gradient(135deg, #667eea 0%, #5568d3 100%);">
-                        Setup 1
+                        Setup 1 : Simple, pas cher mais limité sur le long terme
                     </div>
                     <div class="card-body">
                         <div class="input-group">
-                            <label>Nom du Setup</label>
-                            <input type="text" placeholder="Ex: Setup Entrée de Gamme" data-setup="1" class="setup-name" value="setup simple mais volant pas fou">
+                            <label>Description</label>
+                            <textarea placeholder="Description du setup..." data-setup="1" class="setup-name">Moza R9 avec pédale embrayage et volant plus grand.</textarea>
                         </div>
                         <div class="input-group">
                             <label>Images (URLs)</label>
@@ -507,12 +507,12 @@
 
                 <div class="setup-card">
                     <div class="card-header" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
-                        Setup 2
+                        Setup 2 : Préféré, tout compris
                     </div>
                     <div class="card-body">
                         <div class="input-group">
-                            <label>Nom du Setup</label>
-                            <input type="text" placeholder="Ex: Setup Intermédiaire" data-setup="2" class="setup-name" value="Préféré setup simracing, tout compris ">
+                            <label>Description</label>
+                            <textarea placeholder="Description du setup..." data-setup="2" class="setup-name">Base ALPHA Evo 9nm, volant simagic neo x hub et double palette, pédalier simagic P1000 3 pédales.</textarea>
                         </div>
                         <div class="input-group">
                             <label>Images (URLs)</label>
@@ -556,19 +556,19 @@
 
                 <div class="setup-card">
                     <div class="card-header" style="background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);">
-                        Setup 3
+                        Setup 3 : Setup modulaire avec pédalier qui change
                     </div>
                     <div class="card-body">
                         <div class="input-group">
-                            <label>Nom du Setup</label>
-                            <input type="text" placeholder="Ex: Setup Avancé" data-setup="3" class="setup-name" value="setup modulé, pédalié qui change">
+                            <label>Description</label>
+                            <textarea placeholder="Description du setup..." data-setup="3" class="setup-name">Base ALPHA Evo 9nm, volant simagic neo x hub et double palette, pédalier Moza SR-P 2 ajout d'une 3ème pédale.</textarea>
                         </div>
                         <div class="input-group">
                             <label>Images (URLs)</label>
                             <div class="images-container">
                                 <div class="image-input-wrapper">
                                     <small>Image 1</small>
-                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="3" data-img="1" value="" style="display:none;">
+                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="3" data-img="1" value="https://www.rseat.fr/simagic-alpha-evo-sport-9nm-base-direct-drive?search=simagic&description=true" style="display:none;">
                                     <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                     <input type="text" placeholder="https://..." data-setup="3" data-img="1" class="setup-image" value="https://imgur.com/5YtOSN4.jpg">
                                     <div class="image-preview" data-setup="3" data-img="1" data-type="setup"><img src="https://imgur.com/5YtOSN4.jpg" alt="preview"></div>
@@ -576,7 +576,7 @@
                                 </div>
                                 <div class="image-input-wrapper">
                                     <small>Image 2</small>
-                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="3" data-img="2" value="" style="display:none;">
+                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="3" data-img="2" value="https://www.rseat.fr/pack-promo-simagic-neo-x-hub-double-palettes-avec-volant-driftshop-simracing?search=simagic&description=true" style="display:none;">
                                     <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                     <input type="text" placeholder="https://..." data-setup="3" data-img="2" class="setup-image" value="https://imgur.com/GiuvVlG.jpg">
                                     <div class="image-preview" data-setup="3" data-img="2" data-type="setup"><img src="https://imgur.com/GiuvVlG.jpg" alt="preview"></div>
@@ -584,7 +584,7 @@
                                 </div>
                                 <div class="image-input-wrapper">
                                     <small>Image 3</small>
-                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="3" data-img="3" value="" style="display:none;">
+                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="3" data-img="3" value="https://www.rseat.fr/pedalier-moza-sr-p-2-pedales" style="display:none;">
                                     <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                     <input type="text" placeholder="https://..." data-setup="3" data-img="3" class="setup-image" value="https://imgur.com/B6vy9XT.jpg">
                                     <div class="image-preview" data-setup="3" data-img="3" data-type="setup"><img src="https://imgur.com/B6vy9XT.jpg" alt="preview"></div>
@@ -609,8 +609,8 @@
                     </div>
                     <div class="card-body">
                         <div class="input-group">
-                            <label>Nom du Setup</label>
-                            <input type="text" placeholder="Ex: Setup Pro" data-setup="4" class="setup-name" value="">
+                            <label>Description</label>
+                            <textarea placeholder="Description du setup..." data-setup="4" class="setup-name"></textarea>
                         </div>
                         <div class="input-group">
                             <label>Images (URLs)</label>
@@ -658,8 +658,8 @@
                     </div>
                     <div class="card-body">
                         <div class="input-group">
-                            <label>Nom du Setup</label>
-                            <input type="text" placeholder="Ex: Setup Elite" data-setup="5" class="setup-name" value="">
+                            <label>Description</label>
+                            <textarea placeholder="Description du setup..." data-setup="5" class="setup-name"></textarea>
                         </div>
                         <div class="input-group">
                             <label>Images (URLs)</label>
@@ -713,14 +713,15 @@
                             <h4 style="background: linear-gradient(135deg, #667eea 0%, #5568d3 100%); color: white; padding: 10px; border-radius: 6px;">🎮 Accessoires Setup 1</h4>
                             <div class="input-group">
                                 <label>Description</label>
-                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="1" class="acc-desc">shifter, mais que boite H</textarea>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="1" class="acc-desc">shifter, mais que boite H
+MOZA HGP Shifter</textarea>
                             </div>
                             <div class="input-group">
                                 <label>Images (URLs)</label>
                                 <div class="images-container">
                                     <div class="image-input-wrapper">
                                         <small>Image 1</small>
-                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="1" data-img="1" value="" style="display:none;">
+                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="1" data-img="1" value="https://www.rseat.fr/moza-hgp-shifter" style="display:none;">
                                         <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                         <input type="text" placeholder="https://..." data-setup="1" data-img="1" class="acc-image" value="https://imgur.com/3OJqHXl.jpg">
                                         <div class="image-preview" data-setup="1" data-img="1" data-type="acc"><img src="https://imgur.com/3OJqHXl.jpg" alt="preview"></div>
@@ -756,14 +757,15 @@
 
                             <div class="input-group">
                                 <label>Description</label>
-                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="2" class="acc-desc">shifter Q， boîte H et séquentielle </textarea>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="2" class="acc-desc">shifter Q， boîte H et séquentielle
+Thrustmaster TH8A</textarea>
                             </div>
                             <div class="input-group">
                                 <label>Images (URLs)</label>
                                 <div class="images-container">
                                     <div class="image-input-wrapper">
                                         <small>Image 1</small>
-                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="2" data-img="1" value="" style="display:none;">
+                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="2" data-img="1" value="https://www.amazon.fr/Thrustmaster-TH8A-Shifter-Add-Xbox/dp/B005L0Z2BQ/ref=asc_df_B005L0Z2BQ" style="display:none;">
                                         <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                         <input type="text" placeholder="https://..." data-setup="2" data-img="1" class="acc-image" value="https://imgur.com/RHUGClo.jpg">
                                         <div class="image-preview" data-setup="2" data-img="1" data-type="acc"><img src="https://imgur.com/RHUGClo.jpg" alt="preview"></div>
@@ -798,14 +800,15 @@
 
                             <div class="input-group">
                                 <label>Description</label>
-                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="3" class="acc-desc">shifter bon rapport qualité prix avec H et séquentiel</textarea>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="3" class="acc-desc">shifter bon rapport qualité prix avec H et séquentiel
+Thrustmaster TH8A</textarea>
                             </div>
                             <div class="input-group">
                                 <label>Images (URLs)</label>
                                 <div class="images-container">
                                     <div class="image-input-wrapper">
                                         <small>Image 1</small>
-                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="3" data-img="1" value="" style="display:none;">
+                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="3" data-img="1" value="https://www.amazon.fr/Thrustmaster-TH8A-Shifter-Add-Xbox/dp/B005L0Z2BQ/ref=asc_df_B005L0Z2BQ?" style="display:none;">
                                         <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                         <input type="text" placeholder="https://..." data-setup="3" data-img="1" class="acc-image" value="https://imgur.com/RHUGClo.jpg">
                                         <div class="image-preview" data-setup="3" data-img="1" data-type="acc"><img src="https://imgur.com/RHUGClo.jpg" alt="preview"></div>
@@ -840,14 +843,16 @@
                             <div class="input-group">
                                 <label>Description</label>
                                 <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="4" class="acc-desc">- shifter goal, mais pas utile pour l'instant 
-- a ajouté en plus : frein a main, </textarea>
+Shifter DS-8X H/SQ 
+- a ajouté en plus : frein a main,
+ frein à main Moza</textarea>
                             </div>
                             <div class="input-group">
                                 <label>Images (URLs)</label>
                                 <div class="images-container">
                                     <div class="image-input-wrapper">
                                         <small>Image 1</small>
-                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="4" data-img="1" value="" style="display:none;">
+                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="4" data-img="1" value="https://www.rseat.fr/simagic-shifter-ds-8x-h-sq" style="display:none;">
                                         <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                         <input type="text" placeholder="https://..." data-setup="4" data-img="1" class="acc-image" value="https://imgur.com/Dw2SE4Q.jpg">
                                         <div class="image-preview" data-setup="4" data-img="1" data-type="acc"><img src="https://imgur.com/Dw2SE4Q.jpg" alt="preview"></div>
@@ -855,7 +860,7 @@
                                     </div>
                                     <div class="image-input-wrapper">
                                         <small>Image 2</small>
-                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="4" data-img="2" value="" style="display:none;">
+                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="4" data-img="2" value="https://www.amazon.fr/Forme-v%C3%A9ritable-souple-confortable-couvre-volant/dp/B07DVX5DSM" style="display:none;">
                                         <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                         <input type="text" placeholder="https://..." data-setup="4" data-img="2" class="acc-image" value="https://imgur.com/MGxbtAI.jpg">
                                         <div class="image-preview" data-setup="4" data-img="2" data-type="acc"><img src="https://imgur.com/MGxbtAI.jpg" alt="preview"></div>
@@ -881,18 +886,18 @@
                             <h4 style="background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%); color: white; padding: 10px; border-radius: 6px;">🎮 Accessoires Setup 5</h4>
                             <div class="input-group">
                                 <label>Description</label>
-                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="5" class="acc-desc"></textarea>
+                                <textarea placeholder="Shifter, frein à main, bass shaker..." data-setup="5" class="acc-desc">Fanatec ClubSport Shifter SQ V1.5</textarea>
                             </div>
                             <div class="input-group">
                                 <label>Images (URLs)</label>
                                 <div class="images-container">
                                     <div class="image-input-wrapper">
                                         <small>Image 1</small>
-                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="5" data-img="1" value="" style="display:none;">
+                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-setup="5" data-img="1" value="https://www.ldlc.com/fiche/PB00727478.html?" style="display:none;">
                                         <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
-                                        <input type="text" placeholder="https://..." data-setup="5" data-img="1" class="acc-image" value="">
-                                        <div class="image-preview empty" data-setup="5" data-img="1" data-type="acc"></div>
-                                        <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="5" data-img="1" class="acc-image-price" value="">
+                                        <input type="text" placeholder="https://..." data-setup="5" data-img="1" class="acc-image" value="https://imgur.com/w5fFuaH.jpg">
+                                        <div class="image-preview empty" data-setup="5" data-img="1" data-type="acc"><img src="https://imgur.com/w5fFuaH.jpg" alt="preview"></div>
+                                        <input type="number" placeholder="Prix image 1 (€)" step="0.01" data-setup="5" data-img="1" class="acc-image-price" value="260">
                                     </div>
                                     <div class="image-input-wrapper">
                                         <small>Image 2</small>
@@ -914,7 +919,7 @@
                             </div>
                             <div class="input-group">
                                 <label>Prix Total (€)</label>
-                                <input type="number" placeholder="0.00" step="0.01" data-setup="5" class="acc-price" value="0">
+                                <input type="number" placeholder="0.00" step="0.01" data-setup="5" class="acc-price" value="260">
                             </div>
                         </div>
 
@@ -938,7 +943,7 @@
                             <div class="input-group">
                                 <label>Image Cockpit (URL)</label>
                                 <div class="image-input-wrapper">
-                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-cockpit="basic" value="" style="display:none;">
+                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-cockpit="basic" value="https://oplitegames.com/produit/cockpit-gtr-s8-infinity-force/" style="display:none;">
                                     <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                     <input type="text" placeholder="https://..." id="cockpit-basic-image" value="https://imgur.com/GwErx4t.jpg ">
                                     <div class="image-preview" id="cockpit-basic-preview" data-type="cockpit"><img src="https://imgur.com/GwErx4t.jpg" alt="preview"></div>
@@ -957,7 +962,7 @@
                                 <div class="cockpit-images-container">
                                     <div class="image-input-wrapper">
                                         <small>Accessoire 1</small>
-                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" value="" style="display:none;">
+                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" value="https://oplitegames.com/produit/oplite-sngle-monitor-stand-gtr/" style="display:none;">
                                         <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                         <input type="text" placeholder="https://..." id="cockpit-basic-acc-img-1" class="cockpit-acc-image" data-cockpit="basic" value="https://imgur.com/wzoBwsz.jpg">
                                         <div class="image-preview" id="cockpit-basic-acc-preview-1" data-type="cockpit-acc"><img src="https://imgur.com/wzoBwsz.jpg" alt="preview"></div>
@@ -965,7 +970,7 @@
                                     </div>
                                     <div class="image-input-wrapper">
                                         <small>Accessoire 2</small>
-                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" value="" style="display:none;">
+                                        <input type="text" placeholder="URL du produit (cachée)" class="product-url" value="https://oplitegames.com/produit/gtr-s3-simrace-flightsim-hol-gtr-s3-simrace-flightsim-hol/" style="display:none;">
                                         <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                         <input type="text" placeholder="https://..." id="cockpit-basic-acc-img-2" class="cockpit-acc-image" data-cockpit="basic" value="https://imgur.com/sIUBtqy.jpg">
                                         <div class="image-preview" id="cockpit-basic-acc-preview-2" data-type="cockpit-acc"><img src="https://imgur.com/sIUBtqy.jpg" alt="preview"></div>
@@ -1044,7 +1049,7 @@
                             <div class="input-group">
                                 <label>Image Cockpit (URL)</label>
                                 <div class="image-input-wrapper">
-                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-cockpit="tr40s" value="" style="display:none;">
+                                    <input type="text" placeholder="URL du produit (cachée)" class="product-url" data-cockpit="tr40s" value="https://trakracer.eu/products/tr40s-racing-simulator-1" style="display:none;">
                                     <a class="product-link" target="_blank" rel="noopener noreferrer" style="display:none; margin-bottom:6px; font-weight:600; text-decoration:underline;"> </a>
                                     <input type="text" placeholder="https://..." id="cockpit-tr40s-image" value="https://imgur.com/w5z3fFx.jpg">
                                     <div class="image-preview" id="cockpit-tr40s-preview" data-type="cockpit"><img src="https://imgur.com/w5z3fFx.jpg" alt="preview"></div>
